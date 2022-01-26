@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import SingleJob from "./SingleJob";
 
 const Search = () => {
@@ -27,6 +28,10 @@ const Search = () => {
     <Container>
       <Row>
         <Col className="mx-auto mt-2">
+          <h1>Job search</h1>
+          <Link to="/favourites" className="btn btn-primary">
+            Favourite
+          </Link>
           <Form onSubmit={fetchSearch}>
             <Form.Control
               style={{ width: "80%" }}

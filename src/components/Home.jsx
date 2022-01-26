@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Container, Row } from "react-bootstrap";
+import Search from "./Search";
 import SingleJob from "./SingleJob";
 const Home = () => {
   const [position, setPosition] = useState([]);
@@ -22,6 +23,9 @@ const Home = () => {
   };
   return (
     <Container>
+      <Row>
+        <Search />
+      </Row>
       <Row md={4} xs={1}>
         {position &&
           position.map((job) => <SingleJob job={job} key={job._id} />)}

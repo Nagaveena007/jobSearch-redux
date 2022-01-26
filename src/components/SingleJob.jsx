@@ -1,6 +1,25 @@
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-const SingleJob = ({ job }) => {
+import {
+  addToFavoAction,
+  ADD_TO_FAV,
+  removeFromFavoAction,
+} from "../redux/actions";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { connect } from "react-redux";
+
+const mapStateToProps = (s) => s;
+const mapDispatchToProps = (dispatch) => ({
+  addToFavorites: (comp) => dispatch(addToFavoAction(comp)),
+  removeFromFavorites: (comp) => dispatch(removeFromFavoAction(comp)),
+});
+const SingleJob = ({ job, favourite, addToFavorites, removeFromFavorites }) => {
+  const isFav = favourite.includes(job.company_name);
+  const toggleFavourite = () => {
+    isFav
+      ? removeFromFavorites(job.company_name)
+      : addToFavorites(job.company_name);
+  };
   return (
     <Card className="card mt-3 ml-3 mr-3 mb-3">
       <Card.Body>
@@ -21,6 +40,21 @@ const SingleJob = ({ job }) => {
         <Card.Text className="active">
           <img src="active.png" />
           <small className="ml-1">Actively recruiting</small>
+          {isFav ? (
+            <AiFillHeart
+              color="red"
+              size={26}
+              className="ml-5"
+              onClick={toggleFavourite}
+            />
+          ) : (
+            <AiOutlineHeart
+              color="red"
+              size={26}
+              className="ml-5"
+              onClick={toggleFavourite}
+            />
+          )}
         </Card.Text>
 
         <Card.Text>{job.publication_date}</Card.Text>
@@ -28,4 +62,4 @@ const SingleJob = ({ job }) => {
     </Card>
   );
 };
-export default SingleJob;
+export default connect(mapStateToProps, mapDispatchToProps)(SingleJob);
